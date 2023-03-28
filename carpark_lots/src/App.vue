@@ -20,7 +20,6 @@
       <p class="has-text-centered">Copyright (c) Alvin Yeoh 2023</p>
     </footer>
   </div>
-  <router-view/>
 </template>
 
 <style lang="scss">
