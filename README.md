@@ -10,7 +10,7 @@ This is a Carpark Availability Checker Web Application to track carparks' lots i
 $ npm install
 ```
 
-or
+&nbsp;&nbsp;or
 
 ``` bash
 $ yarn install
