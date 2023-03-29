@@ -34,21 +34,21 @@ const store = createStore({
         maxCarparkNum: []
       }
       var max = state.carparkDetail.small.reduce(
-        (prev, curr) => prev.lots_available > curr.lots_available ? prev : curr, 0
+        (prev, curr) => prev.cumulative_available_lots > curr.cumulative_available_lots ? prev : curr, 0
       )
       var min = state.carparkDetail.small.reduce(
-        (prev, curr) => prev.lots_available < curr.lots_available ? prev : curr, 0
+        (prev, curr) => prev.cumulative_available_lots < curr.cumulative_available_lots ? prev : curr, 0
       )
       state.carparkDetail.small.filter((carpark) => {
-        if (carpark.lots_available >= max.lots_available) 
+        if (carpark.cumulative_available_lots >= max.cumulative_available_lots) 
           carparkDetail.maxCarparkNum.push(carpark.carpark_number)
         
-        if (carpark.lots_available <= min.lots_available)
+        if (carpark.cumulative_available_lots <= min.cumulative_available_lots)
           carparkDetail.minCarparkNum.push(carpark.carpark_number)
           
       })
-      carparkDetail.max = max.lots_available
-      carparkDetail.min = min.lots_available
+      carparkDetail.max = max.cumulative_available_lots
+      carparkDetail.min = min.cumulative_available_lots
       console.log('small carpark', carparkDetail)
 
       return carparkDetail
@@ -59,21 +59,21 @@ const store = createStore({
         maxCarparkNum: []
       }
       var max = state.carparkDetail.medium.reduce(
-        (prev, curr) => prev.lots_available > curr.lots_available ? prev : curr, 0
+        (prev, curr) => prev.cumulative_available_lots > curr.cumulative_available_lots ? prev : curr, 0
       )
       var min = state.carparkDetail.medium.reduce(
-        (prev, curr) => prev.lots_available < curr.lots_available ? prev : curr, 0
+        (prev, curr) => prev.cumulative_available_lots < curr.cumulative_available_lots ? prev : curr, 0
       )
       state.carparkDetail.medium.filter((carpark) => {
-        if (carpark.lots_available >= max.lots_available) 
+        if (carpark.cumulative_available_lots >= max.cumulative_available_lots) 
           carparkDetail.maxCarparkNum.push(carpark.carpark_number)
         
-        if (carpark.lots_available <= min.lots_available)
+        if (carpark.cumulative_available_lots <= min.cumulative_available_lots)
           carparkDetail.minCarparkNum.push(carpark.carpark_number)
           
       })
-      carparkDetail.max = max.lots_available
-      carparkDetail.min = min.lots_available
+      carparkDetail.max = max.cumulative_available_lots
+      carparkDetail.min = min.cumulative_available_lots
       console.log('medium carpark', carparkDetail)
 
       return carparkDetail
@@ -84,21 +84,21 @@ const store = createStore({
         maxCarparkNum: []
       }
       var max = state.carparkDetail.big.reduce(
-        (prev, curr) => prev.lots_available > curr.lots_available ? prev : curr, 0
+        (prev, curr) => prev.cumulative_available_lots > curr.cumulative_available_lots ? prev : curr, 0
       )
       var min = state.carparkDetail.big.reduce(
-        (prev, curr) => prev.lots_available < curr.lots_available ? prev : curr, 0
+        (prev, curr) => prev.cumulative_available_lots < curr.cumulative_available_lots ? prev : curr, 0
       )
       state.carparkDetail.big.filter((carpark) => {
-        if (carpark.lots_available >= max.lots_available) 
+        if (carpark.cumulative_available_lots >= max.cumulative_available_lots) 
           carparkDetail.maxCarparkNum.push(carpark.carpark_number)
         
-        if (carpark.lots_available <= min.lots_available)
+        if (carpark.cumulative_available_lots <= min.cumulative_available_lots)
           carparkDetail.minCarparkNum.push(carpark.carpark_number)
           
       })
-      carparkDetail.max = max.lots_available
-      carparkDetail.min = min.lots_available
+      carparkDetail.max = max.cumulative_available_lots
+      carparkDetail.min = min.cumulative_available_lots
       console.log('big carpark', carparkDetail)
 
       return carparkDetail
@@ -109,21 +109,21 @@ const store = createStore({
         maxCarparkNum: []
       }
       var max = state.carparkDetail.large.reduce(
-        (prev, curr) => prev.lots_available > curr.lots_available ? prev : curr, 0
+        (prev, curr) => prev.cumulative_available_lots > curr.cumulative_available_lots ? prev : curr, 0
       )
       var min = state.carparkDetail.large.reduce(
-        (prev, curr) => prev.lots_available < curr.lots_available ? prev : curr, 0
+        (prev, curr) => prev.cumulative_available_lots < curr.cumulative_available_lots ? prev : curr, 0
       )
       state.carparkDetail.large.filter((carpark) => {
-        if (carpark.lots_available >= max.lots_available) 
+        if (carpark.cumulative_available_lots >= max.cumulative_available_lots) 
           carparkDetail.maxCarparkNum.push(carpark.carpark_number)
         
-        if (carpark.lots_available <= min.lots_available)
+        if (carpark.cumulative_available_lots <= min.cumulative_available_lots)
           carparkDetail.minCarparkNum.push(carpark.carpark_number)
           
       })
-      carparkDetail.max = max.lots_available
-      carparkDetail.min = min.lots_available
+      carparkDetail.max = max.cumulative_available_lots
+      carparkDetail.min = min.cumulative_available_lots
       console.log('large carpark', carparkDetail)
 
       return carparkDetail
@@ -158,32 +158,48 @@ const store = createStore({
           var carparkData = response.data.items[0].carpark_data
           if (carparkData) {
             carparkData.filter(
-              (data) => data.carpark_info.filter(
+              (data) => {
+                data.carpark_info.reduce((cumulativeLot, info) => {
+                  info.cumulative_total_lots = parseInt(cumulativeLot) + (parseInt(info["total_lots"]) || 0)
+                  return info.cumulative_total_lots
+                }, 0)
+
+                data.carpark_info.reduce((cumulativeAvailable, info) => {
+                  info.cumulative_available_lots = parseInt(cumulativeAvailable) + (parseInt(info["lots_available"]) || 0)
+                  return info.cumulative_available_lots
+                }, 0)
+                
+                data.carpark_info.filter(
                 (info) => {
-                  if (parseInt(info.total_lots) >= 0 && parseInt(info.total_lots) < 100) {
-                    info.carpark_number = data.carpark_number
-                    newCarparkDetail.small.push(info)
+                  if (info == data.carpark_info.at(-1)) {
+                    if (parseInt(info.cumulative_total_lots) >= 0 && parseInt(info.cumulative_total_lots) < 100) {
+                      info.carpark_number = data.carpark_number
+                      newCarparkDetail.small.push(info)
+                    }
+                    if (parseInt(info.cumulative_total_lots) >= 100 && parseInt(info.cumulative_total_lots) < 300) {
+                      info.carpark_number = data.carpark_number
+                      newCarparkDetail.medium.push(info)
+                    }
+                    if (parseInt(info.cumulative_total_lots) >= 300 && parseInt(info.cumulative_total_lots) < 400) {
+                      info.carpark_number = data.carpark_number
+                      newCarparkDetail.big.push(info)
+                    }
+                    if (parseInt(info.cumulative_total_lots) >= 400) {
+                      info.carpark_number = data.carpark_number
+                      newCarparkDetail.large.push(info)
+                    }
+                    if (parseInt(info.cumulative_total_lots) >= 0) {
+                      info.carpark_number = data.carpark_number
+                      newCarparkDetail.total.push(info)
+                    }
                   }
-                  if (parseInt(info.total_lots) >= 100 && parseInt(info.total_lots) < 300) {
-                    info.carpark_number = data.carpark_number
-                    newCarparkDetail.medium.push(info)
-                  }
-                  if (parseInt(info.total_lots) >= 300 && parseInt(info.total_lots) < 400) {
-                    info.carpark_number = data.carpark_number
-                    newCarparkDetail.big.push(info)
-                  }
-                  if (parseInt(info.total_lots) >= 400) {
-                    info.carpark_number = data.carpark_number
-                    newCarparkDetail.large.push(info)
-                  }
-                  if (parseInt(info.total_lots) >= 0) {
-                    info.carpark_number = data.carpark_number
-                    newCarparkDetail.total.push(info)
-                  }
+                  
                 }
                 ).length
+              }
             )
           }
+
           commit("setCarparkDetail", newCarparkDetail)
         })
         .catch(error => {
