@@ -1,5 +1,5 @@
-import { createStore } from 'vuex'
 import axios from 'axios'
+import { createStore } from 'vuex'
 
 const store = createStore({
   state: {
@@ -49,7 +49,6 @@ const store = createStore({
       })
       carparkDetail.max = max.cumulative_available_lots
       carparkDetail.min = min.cumulative_available_lots
-      console.log('small carpark', carparkDetail)
 
       return carparkDetail
     },
@@ -74,7 +73,6 @@ const store = createStore({
       })
       carparkDetail.max = max.cumulative_available_lots
       carparkDetail.min = min.cumulative_available_lots
-      console.log('medium carpark', carparkDetail)
 
       return carparkDetail
     },
@@ -99,7 +97,6 @@ const store = createStore({
       })
       carparkDetail.max = max.cumulative_available_lots
       carparkDetail.min = min.cumulative_available_lots
-      console.log('big carpark', carparkDetail)
 
       return carparkDetail
     },
@@ -124,7 +121,6 @@ const store = createStore({
       })
       carparkDetail.max = max.cumulative_available_lots
       carparkDetail.min = min.cumulative_available_lots
-      console.log('large carpark', carparkDetail)
 
       return carparkDetail
     },
@@ -132,7 +128,7 @@ const store = createStore({
   },
   mutations: {
     setCarparkDetail(state, carparkDetail) {
-      console.log(carparkDetail)
+      console.log('carparkDetail', carparkDetail)
       state.carparkDetail = carparkDetail
     },
     setTimestamp(state, timestamp) {
