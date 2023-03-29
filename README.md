@@ -4,7 +4,8 @@ This is a Carpark Availability Checker Web Application to track carparks' lots i
 
 ### Installation
 1. Clone the respository by using the command ```git clone https://github.com/iiam33/carpark-lots-sg.git```
-2. Then, run the following command to install 
+2. Change the directory into the Vue project by using the command ```cd carpark_lots```
+3. Then, run the following command to install 
  
 ``` bash
 $ npm install
