@@ -27,3 +27,18 @@ or
 ``` bash
 $ yarn serve
 ```
+2. Navigate to http://localhost:8080. The app will automatically reload if you change any of the source files.
+
+#### Build
+
+Run `build` to build the project. The build artifacts will be stored in the `build/` directory.
+
+```bash
+$ npm run build
+```
+
+or
+
+```bash
+$ yarn build
+```
