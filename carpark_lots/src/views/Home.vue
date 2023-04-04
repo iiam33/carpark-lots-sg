@@ -31,16 +31,16 @@
                   </div>
 
                   <div class="mt-1 pl-5 is-size-6 ">
-                    <strong>Highest Lots Available:</strong> {{ smallCarpark.max }}
+                    <strong>Highest Lots Available:</strong> {{ carpark.small.max }}
                   </div>
                   <div class="mt-1 pl-5 is-size-6 " v-if="!isHidden.small">
-                    <strong>Highest Lots Carpark:</strong> {{ smallCarpark.maxCarparkNum.map((carparkNum) => carparkNum).join(', ') }}
+                    <strong>Highest Lots Carpark:</strong> {{ carpark.small.maxCarparkNum.map((carparkNum) => carparkNum).join(', ') }}
                   </div>
                   <div class="mt-1 pl-5 is-size-6 ">
-                    <strong>Lowest Lots Available:</strong> {{ smallCarpark.min }}
+                    <strong>Lowest Lots Available:</strong> {{ carpark.small.min }}
                   </div>
                   <div class="mt-1 pl-5 is-size-6 " v-if="!isHidden.small">
-                    <strong>Lowest Lots Carpark:</strong> {{ smallCarpark.minCarparkNum.map((carparkNum) => carparkNum).join(', ') }}
+                    <strong>Lowest Lots Carpark:</strong> {{ carpark.small.minCarparkNum.map((carparkNum) => carparkNum).join(', ') }}
                   </div>
                   <div class="mt-1 pl-5 is-size-6 ">
                     <strong>Updated at:</strong> {{ store.state.timestamp }}
@@ -76,16 +76,16 @@
                   </div>
 
                   <div class="mt-1 pl-5 is-size-6 ">
-                    <strong>Highest Lots Available:</strong> {{ mediumCarpark.max }}
+                    <strong>Highest Lots Available:</strong> {{ carpark.medium.max }}
                   </div>
                   <div class="mt-1 pl-5 is-size-6 " v-if="!isHidden.middle">
-                    <strong>Highest Lots Carpark:</strong> {{ mediumCarpark.maxCarparkNum.map((carparkNum) => carparkNum).join(', ') }}
+                    <strong>Highest Lots Carpark:</strong> {{ carpark.medium.maxCarparkNum.map((carparkNum) => carparkNum).join(', ') }}
                   </div>
                   <div class="mt-1 pl-5 is-size-6 ">
-                    <strong>Lowest Lots Available:</strong> {{ mediumCarpark.min }}
+                    <strong>Lowest Lots Available:</strong> {{ carpark.medium.min }}
                   </div>
                   <div class="mt-1 pl-5 is-size-6 " v-if="!isHidden.middle">
-                    <strong>Lowest Lots Carpark:</strong> {{ mediumCarpark.minCarparkNum.map((carparkNum) => carparkNum).join(', ') }}
+                    <strong>Lowest Lots Carpark:</strong> {{ carpark.medium.minCarparkNum.map((carparkNum) => carparkNum).join(', ') }}
                   </div>
                   <div class="mt-1 pl-5 is-size-6 ">
                     <strong>Updated at:</strong> {{ store.state.timestamp }}
@@ -120,16 +120,16 @@
                   </div>
 
                   <div class="mt-1 pl-5 is-size-6 ">
-                    <strong>Highest Lots Available:</strong> {{ bigCarpark.max }}
+                    <strong>Highest Lots Available:</strong> {{ carpark.big.max }}
                   </div>
                   <div class="mt-1 pl-5 is-size-6 " v-if="!isHidden.big">
-                    <strong>Highest Lots Carpark:</strong> {{ bigCarpark.maxCarparkNum.map((carparkNum) => carparkNum).join(', ') }}
+                    <strong>Highest Lots Carpark:</strong> {{ carpark.big.maxCarparkNum.map((carparkNum) => carparkNum).join(', ') }}
                   </div>
                   <div class="mt-1 pl-5 is-size-6 ">
-                    <strong>Lowest Lots Available:</strong> {{ bigCarpark.min }}
+                    <strong>Lowest Lots Available:</strong> {{ carpark.big.min }}
                   </div>
                   <div class="mt-1 pl-5 is-size-6 " v-if="!isHidden.big">
-                    <strong>Lowest Lots Carpark:</strong> {{ bigCarpark.minCarparkNum.map((carparkNum) => carparkNum).join(', ') }}
+                    <strong>Lowest Lots Carpark:</strong> {{ carpark.big.minCarparkNum.map((carparkNum) => carparkNum).join(', ') }}
                   </div>
                   <div class="mt-1 pl-5 is-size-6 ">
                     <strong>Updated at:</strong> {{ store.state.timestamp }}
@@ -164,16 +164,16 @@
                   </div>
 
                   <div class="mt-1 pl-5 is-size-6 ">
-                    <strong>Highest Lots Available:</strong> {{ largeCarpark.max }}
+                    <strong>Highest Lots Available:</strong> {{ carpark.large.max }}
                   </div>
                   <div class="mt-1 pl-5 is-size-6 " v-if="!isHidden.large">
-                    <strong>Highest Lots Carpark:</strong> {{ largeCarpark.maxCarparkNum.map((carparkNum) => carparkNum).join(', ') }}
+                    <strong>Highest Lots Carpark:</strong> {{ carpark.large.maxCarparkNum.map((carparkNum) => carparkNum).join(', ') }}
                   </div>
                   <div class="mt-1 pl-5 is-size-6 ">
-                    <strong>Lowest Lots Available:</strong> {{ largeCarpark.min }}
+                    <strong>Lowest Lots Available:</strong> {{ carpark.large.min }}
                   </div>
                   <div class="mt-1 pl-5 is-size-6 "  v-if="!isHidden.large">
-                    <strong>Lowest Lots Carpark:</strong> {{ largeCarpark.minCarparkNum.map((carparkNum) => carparkNum).join(', ') }}
+                    <strong>Lowest Lots Carpark:</strong> {{ carpark.large.minCarparkNum.map((carparkNum) => carparkNum).join(', ') }}
                   </div>
                   <div class="mt-1 pl-5 is-size-6 ">
                     <strong>Updated At:</strong> {{ store.state.timestamp }}
@@ -225,11 +225,7 @@ export default {
   },
   setup() {
     const store = useStore()
-
-    const smallCarpark = computed(() => store.getters.totalMinMaxSmallCarpark)
-    const mediumCarpark = computed(() => store.getters.totalMinMaxMediumCarpark)
-    const bigCarpark = computed(() => store.getters.totalMinMaxBigCarpark)
-    const largeCarpark = computed(() => store.getters.totalMinMaxLargeCarpark)
+    const carpark = computed(() => store.getters.totalMinMaxCarpark)
 
     function getCarparkAvailability() {
       store.dispatch('getCarparkAvailability')
@@ -237,10 +233,7 @@ export default {
 
     return {
       store,
-      smallCarpark,
-      mediumCarpark,
-      bigCarpark,
-      largeCarpark,
+      carpark,
       getCarparkAvailability
     }
   }
