@@ -69,7 +69,6 @@ const store = createStore({
             
             if (carpark.cumulative_available_lots <= min.cumulative_available_lots)
               carparkDetail[key].minCarparkNum.push(carpark.carpark_number)
-              
           })
       }
       return carparkDetail

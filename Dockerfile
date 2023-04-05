@@ -3,12 +3,12 @@ RUN npm install -g http-server
 
 WORKDIR /app
 
-COPY package*.json ./
+COPY . .
+
+WORKDIR /app/carpark_lots
 
 RUN npm install
 
-COPY . .
-
 RUN npm run build
 
-CMD [ "http-server", "dist" ]
+CMD ["npm", "run", "serve"]
