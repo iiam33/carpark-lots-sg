@@ -30,7 +30,7 @@ $ yarn serve
 ```
 2. Navigate to http://localhost:8080. The app will automatically reload if you change any of the source files.
 
-#### Build
+### Build
 
 1. Run `build` to build the project. The build artifacts will be stored in the `build/` directory.
 
@@ -44,7 +44,7 @@ or
 $ yarn build
 ```
 
-#### Docker
+### Docker
 1. To build a docker image for this web app
 
 ```bash
