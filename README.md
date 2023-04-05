@@ -32,7 +32,7 @@ $ yarn serve
 
 #### Build
 
-Run `build` to build the project. The build artifacts will be stored in the `build/` directory.
+1. Run `build` to build the project. The build artifacts will be stored in the `build/` directory.
 
 ```bash
 $ npm run build
@@ -43,3 +43,17 @@ or
 ```bash
 $ yarn build
 ```
+
+#### Docker
+1. To build a docker image for this web app
+
+```bash
+$ docker build -t carpark-lots:latest .
+```
+
+2. To run the docker image
+3. 
+```bash
+$ docker run carpark-lots:latest
+```
+
